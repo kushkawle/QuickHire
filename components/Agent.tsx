@@ -33,7 +33,7 @@ const Agent = ({userName}: AgentProps) => {
     <div className ="call-view">
       <div className ="card-interviewer">
         <div className="avatar">
-          <Image src='/ai-avatar.png' alt='vapi' width={65}
+          <Image src='/logo2.png' alt='vapi' width={115}
           height ={54} className="object-cover" />
             {isSpeaking && <span className ="animate-speak"></span>}
         </div>
