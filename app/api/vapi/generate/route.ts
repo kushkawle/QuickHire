@@ -2,9 +2,7 @@ import {generateText} from "ai";
 import {google} from "@ai-sdk/google";
 import { getRandomInterviewCover } from "@/lib/utils";
 import { db } from "@/firebase/admin";
-export async function GET(){
-return Response.json({success: true,data: 'Thank You!'},{status: 200});
-}
+
 
 export async function POST(request: Request) {
     const{ type, role, level, techstack, amount, userid} = await request.json();
@@ -41,4 +39,8 @@ export async function POST(request: Request) {
         console.error(error);
         return Response.json({ success: false, error}, {status: 500});
     }
+}
+
+export async function GET(){
+return Response.json({success: true,data: 'Thank You!'},{status: 200});
 }
