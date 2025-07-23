@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { vapi } from "@/lib/vapi.sdk";
 import Vapi from "@vapi-ai/web";
 import { interviewer } from "@/constants";
+import { createFeedback } from "@/lib/actions/general.action";
 //import { interviewer } from "@/constants";
 //import { createFeedback } from "@/lib/actions/general.action";
 
@@ -75,10 +76,11 @@ const Agent = ({userName, userId, type, interviewId, questions}: AgentProps) => 
      console.log('Generate feedback here.');
      
      //todo
-     const { success, id} = {
-      success: true,
-      id: 'feedback-id'
-     }
+     const { success, feedbackId:id} = await createFeedback({
+       interviewId: interviewId!,
+       userId: userId!,
+       transcript: messages
+     })
      if(success && id){
       router.push(`/interview/${interviewId}/feedback`);
      } else{
