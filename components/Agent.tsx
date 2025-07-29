@@ -7,10 +7,12 @@ import { useState, useEffect } from "react";
 
 
 
+
 import { vapi } from "@/lib/vapi.sdk";
 import Vapi from "@vapi-ai/web";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
+
 //import { interviewer } from "@/constants";
 //import { createFeedback } from "@/lib/actions/general.action";
 
@@ -75,7 +77,7 @@ const Agent = ({userName, userId, type, interviewId, questions}: AgentProps) => 
    const handleGenerateFeedback =async (meaasges : SavedMessage[]) =>{
      console.log('Generate feedback here.');
      
-     //todo
+     
      const { success, feedbackId:id} = await createFeedback({
        interviewId: interviewId!,
        userId: userId!,
@@ -131,6 +133,9 @@ const Agent = ({userName, userId, type, interviewId, questions}: AgentProps) => 
     }
     const latestMessage = messages[messages.length -1]?.content; 
     const isCallInactiveOrFinished = callStatus === CallStatus.INACTIVE || callStatus === CallStatus.FINISHED;
+
+   
+
   return (
     <>
     <div className ="call-view">
@@ -144,10 +149,11 @@ const Agent = ({userName, userId, type, interviewId, questions}: AgentProps) => 
       </div>
       <div className="card-border">
           <div className="card-content">
-            <Image src="/user-avatar.png" alt='user avatar'
+            <Image src="/user.png" alt='user avatar'
             width={540} height={540} className ="rounded-full object-cover
             size-[120px]"/>
-            <h3>{userName}</h3>
+            
+            <h3>{userName}</h3> 
           </div>
       </div>
     </div>

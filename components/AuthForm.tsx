@@ -11,9 +11,9 @@ import Link from "next/link"
 import{toast} from "sonner"
 import FormField from "@/components/FormField"
 import { useRouter } from "next/navigation"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { signIn, signUp } from "@/lib/actions/auth.action";
-
+import { useState } from "react";
 
 const authFormSchema = (type: FormType) =>{
   return z.object({
@@ -26,7 +26,6 @@ const authFormSchema = (type: FormType) =>{
 const AuthForm = ({ type}:{type: FormType}) => {
   const router = useRouter();
   const formSchema = authFormSchema(type);
-    // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +35,7 @@ const AuthForm = ({ type}:{type: FormType}) => {
     },
   })
  
-  // 2. Define a submit handler.
+ 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try{
       if(type === 'sign-up'){
@@ -82,15 +81,34 @@ const AuthForm = ({ type}:{type: FormType}) => {
           idToken,
         });
 
+        
+
           toast.success('Sign-in successfully.')
        router.push('/')
       }
       
     }catch(error){
       console.log(error);
-      toast.error('There was an error: ${error}')
+      toast.error(`There was an error: ${error}`)
     }
   }
+  async function handleForgotPassword() {
+  const email = form.getValues("email"); 
+
+  if (!email) {
+    toast.error("Please enter your email first.");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast.success("Password reset email sent. Check your inbox.");
+  } catch (error: any) {
+    console.error(error);
+    toast.error("Error sending reset email. Try again later.");
+  }
+}
+
   const isSignIn = type === 'sign-in';
   return (
     <div>
@@ -128,13 +146,26 @@ const AuthForm = ({ type}:{type: FormType}) => {
                placeholder="Enter your password" 
                 type="password"
                 />
+
+                   {isSignIn && (
+                    <div className="text-right text-sm">
+                      <button
+                       type="button"
+                       onClick={handleForgotPassword}
+                       className="text-indigo-600 hover:underline"
+                       >
+                        Forgot Password?
+                      </button>
+                    </div>
+                    )}
+
                <Button className ='khushbutton' type="submit">{isSignIn ? 'Sign in':<div className="flex justify-center gap-2">Get Started<Image src="/right-arrow.svg" alt="logo" height ={12} width={12} /></div> } 
                </Button>
                 </form>
                 </Form>
                <p className="text-center">
                  {isSignIn ? 'No account yet?' : 'Have an account already? '}
-                 <Link href={!isSignIn ? '/sign-in' :'/sign-up'} className ="font-bold text-user-primary ml-1 text-indigo-600 hover:text-indigo-600/70">
+                 <Link href={!isSignIn ? '/sign-in' :'/sign-up'} className ="font-bold text-user-primary ml-1 text-indigo-600 hover:text-indigo-600/70 hover:underline">
                  {!isSignIn ? 'Sign in':'Sign up'}
                  </Link>
                 </p>
