@@ -8,7 +8,12 @@ const Page = async () => {
   const user =await getCurrentUser();
   return (
     <>
-    <h3> Interview Generation</h3>
+    <div className="flex flex-center">
+      <div > 
+      <h2>Interview Generation</h2>
+      </div>
+    </div>
+    
 
 
     <Agent userName={user?.name!} userId ={user?.id} type="generate"/>
@@ -18,3 +23,4 @@ const Page = async () => {
 }
 
 export default Page
+//  bg-gray-500 width rounded-full
