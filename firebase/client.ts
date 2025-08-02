@@ -24,8 +24,8 @@ const firebaseConfig = {
   //messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: "1:684393486940:web:3c6b4582072fcebcf96499",
   //appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: "G-BNLD3MNN8K"
-  //measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+  //measurementId: "G-BNLD3MNN8K"
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 
